@@ -1,46 +1,44 @@
-# codex-exam-harness
+# codex-harness
 
-Codex로 실무형 과제를 풀 때 쓰는 하네스입니다. AGENTS.md 규칙과 스킬이 들어 있습니다(SK하이닉스 AI 해커톤 2026 2차 예선 대비).
+Codex로 실무형 과제를 풀 때 쓰는 하네스야. AGENTS.md 규칙, 스킬, 훅이 들어 있어.
 
 ## 설치 (작업공간 터미널에서)
 
 ```bash
-git clone https://github.com/<github-id>/codex-exam-harness /tmp/h
-bash /tmp/h/install.sh .        # 스킬 → ~/.agents/skills, 하네스 규칙 → ./AGENTS.md 뒤에 추가, 카파시 지침 → ~/.codex/AGENTS.md 뒤에 추가
-codex                           # 이미 켜져 있으면 재시작 후 /skills 로 확인
+git clone https://github.com/<github-id>/codex-harness /tmp/h
+bash /tmp/h/install.sh .
+codex   # 이미 켜져 있으면 재시작 후 /skills 로 확인
 ```
 
-- 스킬은 작업공간 밖(`~/.agents/skills`)에 설치됩니다. 구버전 Codex라 경로가 다르면 `CODEX_SKILLS_DIR=~/.codex/skills bash /tmp/h/install.sh .`처럼 바꿔서 실행하세요.
-- 과제가 준 `AGENTS.md`는 그대로 두고 뒤에 덧붙입니다. 여러 번 실행해도 한 번만 들어갑니다.
-- 설치 후 새 작업공간에서 `$init`을 호출해 폴더별 `AGENTS.md`와 문서 링크를 정리하세요.
-- 이미 하네스를 설치한 작업공간은 재설치해도 기존 `AGENTS.md`를 덮어쓰지 않습니다. 기존 문서 안내 규칙은 새 버전에 맞게 직접 갱신하세요.
+- 스킬 → `~/.agents/skills`, 규칙 → `./AGENTS.md` 뒤에 추가, 카파시 지침 → `~/.codex/AGENTS.md` 뒤에 추가, 훅 → `~/.codex/hooks.json`.
+- 경로가 다른 구버전 Codex는 `CODEX_SKILLS_DIR=~/.codex/skills bash /tmp/h/install.sh .`로 실행해.
+- 과제가 준 `AGENTS.md`는 보존하고 뒤에 덧붙여. 이미 설치했으면 덮어쓰지 않아. 규칙이 바뀌었으면 직접 갱신해.
+- 훅은 `node_modules`, `.git`, 캐시, 스킬 폴더를 읽는 명령을 막아. Codex에서 `/hooks`로 신뢰 승인해야 켜져. `hooks.json`이 이미 있으면 건너뛰니 직접 합쳐.
 
-## 스킬 (모두 자동 호출 꺼짐, `$이름`으로 부를 때만 동작)
+## 사용
+
+- 새 작업공간에서 첫 요청을 하면 `link` 스킬이 자동으로 돌아서 루트 `AGENTS.md`에 폴더 구조와 문서 링크를 정리해. 수동 실행은 `$link`.
+- 나머지 스킬은 자동 호출이 꺼져 있어. `$이름`으로 부를 때만 동작해.
 
 | 용도 | 스킬 |
 |---|---|
-| 작업공간 초기화 | `$init`(폴더 탐색, 폴더별 안내와 문서 링크 정리) |
-| 요구사항 정리 | `$grill-me`(계획 검증 인터뷰), `$to-questionnaire`(실무자에게 물을 질문지), `$grill-with-docs` |
-| 구현 파이프라인 (Pocock) | `$setup-matt-pocock-skills`(트래커는 local files 선택) → `$to-spec` → `$to-tickets` → `$implement`(tdd + code-review) |
-| 구현 도구 | `$tdd`, `$diagnosing-bugs`, `$prototype`, `$codebase-design`, `$domain-modeling` |
-| 리뷰 | `$ponytail-review`(제출 전 셀프 리뷰), `$code-review`, `$ponytail-audit` |
-| 이해·설명 | `$probe-quiz`(서술형 대비 퀴즈), `$probe-quiz 리허설`, `$probe-quiz 설명`, `$eli5 <주제>`, `$teach`, `$wait-what` |
-| 말투 | `$caveman`(짧게), `$ponytail`(최소 변경 모드) |
-| 기타 | `$handoff`, `$research`, `$retro`, `$ask-matt`, `$improve-codebase-architecture`, `$implement-spec`, `$pr`, `$triage`, `$wayfinder`, `$wizard`, `$writing-for-agents`, `$ponytail-debt`, `$ponytail-gain`, `$ponytail-help` |
+| 요구사항 정리 | `$grill-me`, `$to-questionnaire`, `$grill-with-docs` |
+| 구현 파이프라인 | `$setup-matt-pocock-skills`(트래커는 local files) → `$to-spec` → `$to-tickets` → `$implement` |
+| 구현 도구 | `$tdd`, `$diagnosing-bugs`, `$prototype` |
+| 리뷰 | `$ponytail-review`(제출 전 셀프 리뷰), `$code-review` |
+| 이해·설명 | `$probe-quiz`(프로젝트 이해도 퀴즈), `$eli5 <주제>`, `$teach` |
 
-- `$implement-spec`은 서브에이전트를 병렬로 띄워 토큰이 많이 듭니다. 로컬 실험에서 직접 처리보다 4.5~6.5배였습니다.
-- `$ponytail`을 상시 모드로 쓰면 서버를 `127.0.0.1`에 띄운 적이 있습니다(3회 중 2회). AGENTS.md의 `0.0.0.0` 규칙을 지우지 마세요.
+- `$implement-spec`은 서브에이전트를 병렬로 띄워서 토큰이 4.5~6.5배 들어.
+- `$ponytail`을 상시 모드로 쓰면 서버를 `127.0.0.1`에 띄운 적이 있어(3회 중 2회). AGENTS.md의 `0.0.0.0` 규칙을 지우지 마.
 
 ## 사람이 지킬 것 (AGENTS.md에 없는 것)
 
-- `/status`로 모델을 확인하고, `/model`에서 6.1 Sol, 5.6 Terra, 6.0 Luna 중 하나를 고릅니다. Astra는 쓰지 않습니다.
-- **승인 대기는 기다려도 넘어가지 않습니다.** 직접 승인하거나 거절하세요. 서브에이전트의 승인 요청은 그 스레드를 열어야 보입니다.
-- AI가 고치는 파일을 에디터에서 동시에 수정하지 마세요(저장 충돌).
-- 커밋은 자주 하고, push는 하지 않습니다. 샌드박스에서 Codex가 커밋하지 못하면 직접 커밋하세요.
-- MCP는 플랫폼의 MCP 탭에서 설정합니다.
-- 마감 30분 전에 기능 추가를 멈추고, 20분 전에 `$probe-quiz 리허설`을 하고, 10분 전에 제출을 시작합니다.
-- 서술형(6문항 × 5분, AI와 복붙 금지)은 "결론 → 근거(파일·함수) → 검증 → 한계" 순서로 3~5문장을 씁니다. 질문의 전제가 틀렸으면 차이부터 밝힙니다.
+- `/status`로 모델을 확인하고 `/model`에서 6.1 Sol, 5.6 Terra, 6.0 Luna 중 하나를 골라. Astra는 쓰지 마.
+- 승인 대기는 기다려도 안 넘어가. 직접 승인하거나 거절해. 서브에이전트의 승인 요청은 그 스레드를 열어야 보여.
+- AI가 고치는 파일을 에디터에서 동시에 수정하지 마(저장 충돌).
+- 커밋은 자주, push는 안 해. 샌드박스에서 Codex가 커밋 못 하면 직접 해.
+- MCP는 플랫폼의 MCP 탭에서 설정해.
 
 ## 출처
 
-외부 스킬을 가져왔습니다: [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail), [mattpocock/skills](https://github.com/mattpocock/skills), [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman), [anthropics/claude-plugins-community](https://github.com/anthropics/claude-plugins-community), [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills)(`karpathy.md`). 일부는 `agents/openai.yaml`을 추가하는 등 수정했습니다.
+외부 스킬을 가져왔어: [ponytail](https://github.com/DietrichGebert/ponytail), [mattpocock/skills](https://github.com/mattpocock/skills), [caveman](https://github.com/JuliusBrussee/caveman), [claude-plugins-community](https://github.com/anthropics/claude-plugins-community), [andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills)(`karpathy.md`). 일부는 수정했어.

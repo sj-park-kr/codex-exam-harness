@@ -26,7 +26,7 @@ codex   # 이미 켜져 있으면 재시작 후 /skills 로 확인
 | 구현 파이프라인 | `$setup-matt-pocock-skills`(트래커는 local files) → `$to-spec` → `$to-tickets` → `$implement` |
 | 구현 도구 | `$tdd`, `$diagnosing-bugs`, `$prototype` |
 | 리뷰 | `$ponytail-review`(제출 전 셀프 리뷰), `$code-review` |
-| 이해·설명 | `$probe-quiz`(프로젝트 이해도 퀴즈), `$eli5 <주제>`, `$teach` |
+| 이해·설명 | `$probe-quiz`(시스템·도메인·AI 활용 이해도 퀴즈), `$eli5 <주제>`, `$teach` |
 
 - `$implement-spec`은 서브에이전트를 병렬로 띄워서 토큰이 4.5~6.5배 들어.
 - `$ponytail`을 상시 모드로 쓰면 서버를 `127.0.0.1`에 띄운 적이 있어(3회 중 2회). AGENTS.md의 `0.0.0.0` 규칙을 지우지 마.

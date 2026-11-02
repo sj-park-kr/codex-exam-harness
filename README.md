@@ -17,13 +17,21 @@ codex   # 이미 켜져 있으면 재시작 후 /skills 로 확인
 
 ## 사용
 
+- 진행 순서. 한 단계씩 직접 실행해:
+  1. `$to-questionnaire` → 실무자 질문지(`docs/QUESTIONS.md`). 나온 메시지를 실무자에게 보내.
+  2. `$to-questionnaire` + 실무자 답 붙여 넣기 → 답 반영. 후속 질문이 나오면 한 번 더 보내.
+  3. `$to-spec` → `docs/PRD.md`, `docs/ARCHITECTURE.md`, `docs/mockup.html`. 목업과 스택·폴더 추천안을 보고 확정해. 화면은 `skills/to-spec/DESIGN.md`(색·간격 변수와 카드·표·배지 CSS)를 따라.
+  4. "서버 뼈대 띄워줘(로그인 있으면 로그인까지)" → Browser 미리보기에서 확인.
+  5. "핵심 흐름(입력→처리→결과) 끝까지 연결해" → 미리보기에서 확인.
+  6. "ARCHITECTURE 구현 순서대로 나머지 붙여".
 - 새 작업공간에서 첫 요청을 하면 `link` 스킬이 자동으로 돌아서 각 폴더의 `AGENTS.md`에 폴더 역할과 문서 링크·읽을 시점을 정리해. 모든 폴더(`.git`·의존성·빌드 결과·캐시 제외)에 문서가 없어도 `AGENTS.md`를 만들어. 데이터·제공 파일은 이름 패턴이 같은 것끼리 glob으로 묶어 용도를 한 줄씩 적어. 루트에는 루트 문서와 바로 아래 폴더의 역할, 하위 `AGENTS.md` 링크를 둬. 수동 실행은 `$link`.
 - 나머지 스킬은 자동 호출이 꺼져 있어. `$이름`으로 부를 때만 동작해.
 
 | 용도 | 스킬 |
 |---|---|
-| 요구사항 정리 | `$grill-me`, `$to-questionnaire`, `$grill-with-docs` |
-| 구현 파이프라인 | `$setup-matt-pocock-skills`(트래커는 local files) → `$to-spec` → `$to-tickets` → `$implement` |
+| 요구사항 정리 | `$to-questionnaire`(실무자 질문지, 해커톤용으로 수정), `$grill-me`, `$grill-with-docs` |
+| 설계 | `$to-spec`(사람이 읽는 `docs/PRD.md`와 `docs/ARCHITECTURE.md`(구현 순서 포함), 화면 목업. 해커톤용으로 수정, 트래커 설정 불필요) |
+| 무거운 파이프라인 (큰 과제용) | `$setup-matt-pocock-skills`(트래커는 local files) → `$to-tickets` → `$implement` |
 | 구현 도구 | `$tdd`, `$diagnosing-bugs`, `$prototype` |
 | 리뷰 | `$ponytail-review`(제출 전 셀프 리뷰), `$code-review` |
 | 이해·설명 | `$probe-quiz`(시스템·도메인·AI 활용 이해도 퀴즈), `$eli5 <주제>`, `$teach` |
@@ -38,6 +46,8 @@ codex   # 이미 켜져 있으면 재시작 후 /skills 로 확인
 - AI가 고치는 파일을 에디터에서 동시에 수정하지 마(저장 충돌).
 - 커밋은 자주, push는 안 해. 샌드박스에서 Codex가 커밋 못 하면 직접 해.
 - MCP는 플랫폼의 MCP 탭에서 설정해.
+- Plan 모드는 쓰지 마. 파일 저장이 막혀.
+- 실무자에게 이미 "모름"이라고 들은 걸 Codex가 다시 물으려 하면 `docs/QUESTIONS.md`를 보라고 해.
 
 ## 출처
 

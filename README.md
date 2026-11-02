@@ -10,7 +10,7 @@ bash /tmp/h/install.sh .
 codex   # 이미 켜져 있으면 재시작 후 /skills 로 확인
 ```
 
-- 스킬 → `~/.agents/skills`, 규칙 → `./AGENTS.md` 뒤에 추가, 카파시 지침 → `~/.codex/AGENTS.md` 뒤에 추가, 훅 → `~/.codex/hooks.json`.
+- 스킬 → `~/.agents/skills`, 규칙 → `./AGENTS.md` 뒤에 추가, 카파시 지침 → `~/.codex/AGENTS.md` 뒤에 추가, 훅 → `~/.codex/hooks.json`, git 작성자가 비어 있으면 전역 설정에 채움. 전역 경로가 읽기 전용이면 그 단계만 경고하고 계속해(출력에 `경고:`가 있는지 봐).
 - 경로가 다른 구버전 Codex는 `CODEX_SKILLS_DIR=~/.codex/skills bash /tmp/h/install.sh .`로 실행해.
 - 과제가 준 `AGENTS.md`는 보존하고 뒤에 덧붙여. 이미 설치했으면 덮어쓰지 않아. 규칙이 바뀌었으면 직접 갱신해.
 - 훅은 `node_modules`, `.git`, 캐시, 스킬 폴더와 `.env`(`.env.example` 같은 견본 제외)를 읽는 명령을 막아. 패치 본문, `npm`·`npx`·`node`·`Test-Path` 구간, `'!node_modules'` 같은 제외 글롭, `find -not -path`·`--exclude-dir` 같은 제외 표현, `dist`는 막지 않아. Codex에서 `/hooks`로 신뢰 승인해야 켜져. 목록에 없으면 훅 없이 진행해도 돼. `hooks.json`이 이미 있으면 건너뛰니 직접 합쳐.

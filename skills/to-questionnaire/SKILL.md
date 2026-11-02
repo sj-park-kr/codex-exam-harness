@@ -1,54 +1,44 @@
 ---
 name: to-questionnaire
-description: Turn a decision you can't fully answer into a questionnaire for someone else to fill in.
+description: README·제공 문서에서 빈칸을 찾아 업무 담당자(실무자 에이전트)에게 한 번에 물을 질문지를 docs/QUESTIONS.md로 만들고, 받은 답으로 상태를 갱신한다.
 disable-model-invocation: true
 ---
 
-Turn something the user can't answer alone into a **questionnaire**: a Markdown document they hand to one person to fill in async, or fill out together over a meeting. The recipient holds knowledge the user lacks; the questionnaire pulls it out of them.
+# to-questionnaire (해커톤용)
 
-**Grill the send, not the subject.** Interview the user only about the _send_, which they can always answer: who it goes to, and what they need back. The questions in the document then target the **gap** between what the recipient knows and what the user needs.
+실무자 에이전트에게 한 번에 보낼 질문지를 만든다. 결과물을 바꾸는 빈칸만 묻고, 이미 답이 있거나 "모름"으로 끝난 것은 다시 묻지 않는다.
 
+## 1. 빈칸 찾기
+- README·제공 문서는 필요한 부분만, 데이터는 앞 몇 줄만 읽는다. 파일 전체 출력 금지.
+- 아래 항목마다 문서에 답이 있는지 본다. 있으면 묻지 않고 상태를 "문서 확정"으로 적는다.
+  - 사용자·역할
+  - 입력 데이터의 의미·단위·기준일
+  - 출력·화면에서 꼭 봐야 하는 것
+  - 업무 규칙의 기준값과 예외
+  - 목표 지표: 무엇이 "좋은 결과"인가, 기존 방식과 어떻게 비교하나
+  - 실행 빈도와 데이터 규모: 얼마나 자주 실행되나, 한 번에 다루는 데이터는 어느 정도인가. 답이 없을 때 가정은 "드물게 실행, 제공 데이터 규모"
+  - 범위 밖
+  - 완료 기준
+- 기술 선택(언어, 저장 방식, 인증 방식, 알고리즘)은 묻지 않는다. 구현자 판단이다.
+- `docs/QUESTIONS.md`가 이미 있으면 거기 있는 질문은 다시 넣지 않는다.
 
-1. **Who is it going to?** Ask, in one exchange, the recipient's role, expertise, and relationship to the user. This fixes the questionnaire's tone and how much context it must carry. Done when you know who the recipient is and what they know that the user doesn't.
+## 2. 질문지 쓰기
+`docs/QUESTIONS.md`에 아래 형식으로 쓴다. 최대 10문항, 중요한 순서, 한 문항에 한 가지만.
 
-2. **What do you need back?** Ask, in one exchange, the specific decisions or facts the user can't resolve alone and needs from this person. Done when you have a concrete list of what the user must walk away able to do or decide.
+<questions-template>
+# 실무자 질문
 
-3. **Write the questionnaire.** Draft questions aimed at the gap from steps 1–2, following the Document structure below. Write it to `to-questionnaire-<slug>.md` in the current directory (slug from the topic) and report the path. Done when the file exists and every item the user named in step 2 is covered by a question.
+| # | 질문 | 왜 필요한가 | 답이 없을 때 가정 | 답 | 상태 |
+|---|---|---|---|---|---|
+| Q1 | ... | 이 답에 따라 무엇이 달라지나 한 줄 | ... | | 미답변 |
 
-## Document structure
+상태: 미답변 / 확정 / 모름 / 구현자 판단 / 문서 확정 / 가정
+</questions-template>
 
-Frame the document as a **discovery questionnaire**: the user lacks context, the recipient holds it. Order questions most-important-first, since async means you may only get one pass, and group them under `##` headings by theme once there are more than a handful. Write it using the template below.
+답변에는 실무자에게 그대로 붙여 넣을 메시지만 준다: 맥락 1~2문장 + 번호 붙은 질문. 파일 설명은 생략한다.
 
-<questionnaire-template>
-
-# <Questionnaire title>
-
-**Purpose:** why this questionnaire exists and the decision riding on it.
-
-**From:** <the user>, **To:** <the recipient>, **How your answers will be used:** <where they go>
-
-## Context
-
-One paragraph orienting a recipient who wasn't in the user's head. Enough to answer well, not a page.
-
-## How to answer
-
-Deadline and rough effort. Partial answers and "I don't know" are useful: flag anything you're unsure of rather than skipping it.
-
-## <Theme heading>
-
-One `##` section per theme. Under each, its questions, most-important-first. Every question is one idea, never compound, with an answer stub directly beneath, and a one-line _why this matters_ only where the question could be misread or invite a throwaway answer.
-
-<question-example>
-### What load is the system expected to handle at launch?
-
-_Why this matters: it decides whether we provision for burst traffic now or defer it._
-
->
-</question-example>
-
-## Anything else?
-
-A closing catch-all: anything we didn't ask that we should know?
-
-</questionnaire-template>
+## 3. 답 반영
+- 사용자가 실무자 답을 붙여 넣으면 "답"과 "상태"를 채운다.
+- 모름·구현자 판단은 "답이 없을 때 가정"을 채택하고 DECISIONS.md에 한 줄 남긴다(결정 / 이유 / 버린 대안 / 검증). 다시 묻지 않는다.
+- 실무자는 일부 질문에만 답할 수 있다. 답이 안 온 질문은 결과를 크게 바꾸는 것만 골라 후속 질문으로 다시 묻는다. 답 때문에 새로 생긴 빈칸과 합쳐 최대 3개, 후속 질문은 한 번만 보낸다.
+- 후속 질문에 넣지 않은 미답변은 상태를 "가정"으로 바꾸고 "답이 없을 때 가정"을 채택한다.

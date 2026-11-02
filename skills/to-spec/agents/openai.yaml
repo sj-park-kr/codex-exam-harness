@@ -1,5 +1,5 @@
 interface:
   display_name: "To Spec"
-  short_description: "Turn a conversation into a spec"
+  short_description: "사람이 읽는 docs/PRD.md·docs/ARCHITECTURE.md와 화면 목업"
 policy:
   allow_implicit_invocation: false

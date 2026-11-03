@@ -1,0 +1,5 @@
+interface:
+  display_name: "Run E2E"
+  short_description: "E2E_SCENARIOS.md를 Playwright로 실행하고 실제값·판정 기록"
+policy:
+  allow_implicit_invocation: false

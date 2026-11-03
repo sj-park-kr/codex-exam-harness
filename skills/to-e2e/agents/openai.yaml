@@ -1,0 +1,5 @@
+interface:
+  display_name: "To E2E"
+  short_description: "PRD·ARCHITECTURE·README로 docs/E2E_SCENARIOS.md 작성"
+policy:
+  allow_implicit_invocation: false

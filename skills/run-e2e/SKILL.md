@@ -4,7 +4,7 @@ description: docs/E2E_SCENARIOS.md의 시나리오를 @playwright/test 스펙으
 disable-model-invocation: true
 ---
 
-# run-e2e (해커톤용)
+# run-e2e
 
 `docs/E2E_SCENARIOS.md`를 Playwright로 실행하고 결과를 그 문서에 적는다. 앱 코드는 고치지 않는다.
 

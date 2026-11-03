@@ -4,7 +4,7 @@ description: PRD·ARCHITECTURE·README에서 웹 E2E 시나리오를 뽑아 docs
 disable-model-invocation: true
 ---
 
-# to-e2e (해커톤용)
+# to-e2e
 
 브라우저로 실행할 E2E 시나리오 문서를 만든다. 인터뷰하지 않는다. 이 스킬은 실행하지 않는다(실행은 `$run-e2e`).
 

@@ -4,7 +4,7 @@ description: README·제공 문서에서 빈칸을 찾아 업무 담당자(실�
 disable-model-invocation: true
 ---
 
-# to-questionnaire (해커톤용)
+# to-questionnaire
 
 실무자 에이전트에게 한 번에 보낼 질문지를 만든다. 결과물을 바꾸는 빈칸만 묻고, 이미 답이 있거나 "모름"으로 끝난 것은 다시 묻지 않는다.
 

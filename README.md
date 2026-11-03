@@ -24,10 +24,11 @@ codex   # 이미 켜져 있으면 재시작 후 /skills 로 확인
   4. "서버 뼈대 띄워줘(로그인 있으면 로그인까지)" → Browser 미리보기에서 확인.
   5. "핵심 흐름(입력→처리→결과) 끝까지 연결해" → 미리보기에서 확인.
   6. "ARCHITECTURE 구현 순서대로 나머지 붙여".
-  7. `$to-e2e` → `docs/E2E_SCENARIOS.md`.
-  8. `$run-e2e` → E2E 실행, 실패한 것만 고쳐서 재실행.
+  7. `$ponytail-review` → 지적된 것 고치기. 리뷰 수정으로 코드가 바뀌니 E2E보다 먼저 해.
+  8. `$to-e2e` → `docs/E2E_SCENARIOS.md`.
+  9. `$run-e2e` → E2E 실행, 실패한 것만 고쳐서 재실행.
 - E2E 워크플로우(`$to-e2e` → `$run-e2e`)는 언제 쓰나:
-  - `$to-e2e`: 6단계까지 구현이 끝난 뒤. 완성품의 end-to-end 시험이라 확인할 것(규칙·예외·AC)은 PRD에서, 조작할 화면 라벨은 구현된 화면에서 가져와. 기대값은 구현 출력이 아니라 PRD·ARCHITECTURE·손계산으로 정해.
+  - `$to-e2e`: 7단계 리뷰 수정까지 끝난 뒤. 완성품의 end-to-end 시험이라 확인할 것(규칙·예외·AC)은 PRD에서, 조작할 화면 라벨은 구현된 화면에서 가져와. 기대값은 구현 출력이 아니라 PRD·ARCHITECTURE·손계산으로 정해.
   - `$run-e2e E01`처럼 시나리오 ID를 줘: 실패한 시나리오를 고친 뒤 그것만 다시 돌릴 때. 결과(실제값·판정·증거)는 `docs/E2E_SCENARIOS.md`에 기록돼.
   - `$run-e2e`(ID 없이 미실행 묶음) 또는 "E2E 전체 실행해": 시나리오를 만든 직후와 제출 전. 실패는 앱 문제인지 스펙 문제인지 나눠서 보고하니 앱 수정은 따로 시켜.
   - 쓰지 마: 화면이 없는 과제(CLI·API만), 인터넷이 막혀 Playwright 설치가 안 될 때(미실행으로만 기록돼).
@@ -41,7 +42,7 @@ codex   # 이미 켜져 있으면 재시작 후 /skills 로 확인
 | 무거운 파이프라인 (큰 과제용) | `$setup-matt-pocock-skills`(트래커는 local files) → `$to-tickets` → `$implement` |
 | 구현 도구 | `$tdd`, `$diagnosing-bugs`, `$prototype` |
 | 검증 | `$to-e2e`(E2E 시나리오 문서), `$run-e2e`(Playwright 실행·기록) |
-| 리뷰 | `$ponytail-review`(제출 전 셀프 리뷰), `$code-review` |
+| 리뷰 | `$ponytail-review`(구현 후·E2E 전 셀프 리뷰), `$code-review` |
 | 이해·설명 | `$probe-quiz`(시스템·도메인·AI 활용 이해도 퀴즈), `$eli5 <주제>`, `$teach` |
 
 - `$implement-spec`은 서브에이전트를 병렬로 띄워서 토큰이 4.5~6.5배 들어.

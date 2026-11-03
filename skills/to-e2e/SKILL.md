@@ -1,6 +1,6 @@
 ---
 name: to-e2e
-description: PRD·ARCHITECTURE·README에서 웹 E2E 시나리오를 뽑아 docs/E2E_SCENARIOS.md를 만든다. 기대값은 구현이 아니라 문서와 손계산으로 정한다. 실행은 $run-e2e가 한다.
+description: 완성된 구현을 대상으로 PRD·ARCHITECTURE·README의 규칙과 구현된 화면에서 웹 E2E 시나리오를 뽑아 docs/E2E_SCENARIOS.md를 만든다. 기대값은 구현 출력이 아니라 문서와 손계산으로 정한다. 실행은 $run-e2e가 한다.
 disable-model-invocation: true
 ---
 
@@ -9,10 +9,10 @@ disable-model-invocation: true
 브라우저로 실행할 E2E 시나리오 문서를 만든다. 인터뷰하지 않는다. 이 스킬은 실행하지 않는다(실행은 `$run-e2e`).
 
 ## 1. 근거 읽기
-- `docs/PRD.md`(규칙·AC), `docs/ARCHITECTURE.md`(계산 해석·화면), `README.md`(실행 명령·출력 계약)의 필요한 부분만 읽는다. 과제가 지정한 문서가 있으면 그걸 쓴다.
-- 화면 라벨(버튼·입력·탭 이름)은 실제 화면 코드나 목업에서 확인해 그대로 적는다. Playwright가 `getByRole`·`getByLabel`·`getByText`로 찾을 이름이다.
-- 현재 구현·목업의 출력 숫자를 기대값으로 복사하지 않는다.
-- 제공 데이터의 예외·패턴은 처음 단계(`$to-questionnaire`)에서 본 `docs/QUESTIONS.md`의 "데이터 관찰"을 그대로 쓴다. 여기서 다시 탐색하지 않는다. 그 절이 없으면 "`$to-questionnaire`로 데이터부터 봐"라고 답하고 멈춘다. 관찰된 예외마다(퇴사 이후 근무, 폐지 참조, 0값, 기간 밖 변경 등) 시나리오를 하나 이상 만든다.
+완성된 구현을 대상으로 한다. 무엇을 확인할지는 문서에서, 어떻게 조작할지는 구현에서 가져온다.
+- 기대 동작: `docs/PRD.md`(규칙·예외·AC), `docs/ARCHITECTURE.md`(계산 해석), `README.md`(실행 명령·출력 계약)의 필요한 부분. 과제가 지정한 문서가 있으면 그걸 쓴다. PRD의 규칙·예외마다 시나리오를 하나 이상 만든다.
+- 조작 방법: 구현된 화면 코드에서 경로·화면 라벨(버튼·입력·탭 이름)·업로드 형식을 그대로 가져온다. Playwright가 `getByRole`·`getByLabel`·`getByText`로 찾을 이름이다.
+- 구현의 출력 숫자는 기대값으로 복사하지 않는다. 구현과 PRD가 다르면 PRD 기준으로 기대값을 쓰고 차이를 답변에 올린다.
 - 제공 데이터의 기대값은 `tests/e2e/expected/`에 둔 독립 스크립트로 원본에서 산출한다. PRD·ARCHITECTURE의 규칙·공식만 쓰고 앱 코드를 import하지 않는다. 문서에는 산출 방법(공식·적용 순서)과 결과 표를 같이 적는다.
 
 ## 2. 문서 구조 (`docs/E2E_SCENARIOS.md`)

@@ -147,6 +147,7 @@ A list of testing decisions that were made. Include:
 
 - HTML 파일 하나에 인라인 CSS로 만든다. 외부 리소스(CDN·폰트·이미지 URL) 금지.
 - 요구된 화면을 한 페이지에 세로로 이어 붙이거나 상단 탭(앵커 링크)으로 나눈다. JS는 탭 전환 정도만.
+- 실제로 구현할 화면만 그린다. 설명 문단, 요구사항 번호 표시, 주석 말풍선, 범례, "여기서 ~를 한다" 같은 안내 문구는 넣지 않는다. 설명이 필요하면 PRD에 적는다.
 - 데이터는 제공 데이터의 실제 컬럼명·값 형식을 본뜬 가짜 값 몇 줄. 개인정보·비밀값은 넣지 않는다.
 - 같은 폴더의 `DESIGN.md` CSS를 그대로 넣고 클래스만 붙인다.
 - 보여주기: 이미 돌고 있는 개발 서버가 있으면 그 서버로, 없으면 `python3 -m http.server <포트> --bind 0.0.0.0 --directory docs`(python이 없으면 `npx http-server docs -a 0.0.0.0 -p <포트>`)로 띄우고 포트와 경로(`/mockup.html`)를 알려준다.

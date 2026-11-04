@@ -20,7 +20,8 @@ codex   # 이미 켜져 있으면 재시작 후 /skills 로 확인
 - 진행 순서. 한 단계씩 직접 실행해:
   1. `$to-questionnaire` → 제공 데이터 예외·패턴 집계 + 실무자 질문지(`docs/QUESTIONS.md`). 나온 메시지를 실무자에게 보내.
   2. `$to-questionnaire` + 실무자 답 붙여 넣기 → 답 반영. 후속 질문이 나오면 한 번 더 보내.
-  3. `$to-spec` → `docs/PRD.md`, `docs/ARCHITECTURE.md`, `docs/mockup.html`. 목업과 스택·폴더 추천안을 보고 확정해. 화면은 `skills/to-spec/DESIGN.md`(색·간격 변수와 카드·표·배지 CSS)를 따라.
+  3. `$to-spec` → 먼저 확인 메시지(규칙·가정·범위·성공 기준 요약)만 나오고 멈춤. 실무자에게 보내고, 답을 붙여 넣어 `$to-spec`을 다시 부르면 이어서 진행해 → `docs/PRD.md`, `docs/ARCHITECTURE.md`, `docs/mockup.html`. 목업과 스택·폴더 추천안을 보고 확정해. 화면은 `skills/to-spec/DESIGN.md`(색·간격 변수와 카드·표·배지 CSS)를 따라.
+     그다음 "README 출력 형식 그대로, 손으로 셀 수 있는 작은 입력과 그 기대 출력을 `docs/OUTPUT_SAMPLE.md`로 만들어줘. 필드마다 README 근거 한 줄" → 직접 읽고 README 예시와 뜻이 같은지 확인해.
   4. "서버 뼈대 띄워줘(로그인 있으면 로그인까지)" → Browser 미리보기에서 확인.
   5. "핵심 흐름(입력→처리→결과) 끝까지 연결해" → 미리보기에서 확인.
   6. "ARCHITECTURE 구현 순서대로 나머지 붙여".

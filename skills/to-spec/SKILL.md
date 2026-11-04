@@ -1,14 +1,38 @@
 ---
 name: to-spec
-description: "Turn the current conversation into a PRD and an architecture doc and write them to docs/PRD.md and docs/ARCHITECTURE.md: no interview, just synthesis of what you've already discussed."
+description: "Turn the current conversation into a PRD and an architecture doc and write them to docs/PRD.md and docs/ARCHITECTURE.md: synthesis of what you've already discussed; asks the user when a decision is needed."
 disable-model-invocation: true
 ---
 
-This skill takes the current conversation context and codebase understanding and produces a spec. Do NOT interview the user; just synthesize what you already know.
+This skill takes the current conversation context and codebase understanding and produces a spec. Synthesize what you already know. 대화·문서에 답이 없는 판단(규칙 빈칸, README 입출력 형식과의 충돌, 스택·구조 선택)은 직접 정하지 말고 추천안을 붙여 모아서 사용자에게 묻고, 답을 받은 뒤 문서를 쓴다(AGENTS.md "기록" 절).
 
 Write the spec as two human-readable documents: `docs/PRD.md` (what and why) and `docs/ARCHITECTURE.md` (how). Do not publish them to an issue tracker. If the assignment already provides a PRD or ARCHITECTURE document, fill that one instead of creating a new file.
 
 ## Process
+
+0. 실무자 확인 (문서 작성 전)
+   - 사용자가 실무자 확인 답을 붙여 넣지 않았으면 확인 메시지만 만들고 **멈춘다**. 문서를 쓰지 않는다. 답변에는 이 메시지만 준다.
+   - 재료는 `docs/QUESTIONS.md`의 답·가정, README·제공 문서의 규칙, 지금까지의 대화다. 문서 원문은 보내지 않는다(긴 글은 실무자가 일부만 답한다).
+   - 15줄 이내. 번호는 묶음을 넘어 이어 붙여 실무자가 틀린 번호만 답하게 한다.
+
+   <confirm-template>
+   구현 전에 이해한 내용이 맞는지 확인 부탁드려요. 틀린 번호만 알려주시면 돼요.
+
+   [규칙] 계산·판정에 쓰는 규칙. 숫자와 경계(같을 때 포함인지)를 적는다
+   1. ...
+   [가정] 실무자가 모름·미답변이라 사용자가 정한 것. 다시 묻지 않고 알린다
+   n. ...
+   [운영] 사람이 확정하는 지점, 처리 못 한 대상을 어떻게 보여주는지
+   n. ...
+   [안 만드는 것]
+   n. ...
+   [성공 기준] 지금 값 → 목표 값. 측정 위치가 비어 있으면 "어디서 확인하시나요?"를 붙인다
+   n. ...
+
+   마지막으로, 위 조건 말고 "이러면 사용자가 결과를 안 쓴다(포기한다)"는 경우가 더 있나요?
+   </confirm-template>
+
+   - 사용자가 답을 붙여 넣으면(또는 "확인 생략"이라고 하면) 고친 번호와 새로 나온 조건을 `docs/QUESTIONS.md`(없으면 만든다)에 `C1`, `C2`… 행으로 추가하고 상태를 "확정"으로 둔다. 실무자 답이 기존 사용자 결정과 다르면 사용자에게 알리고, 사용자가 받아들이면 DECISIONS.md를 고친다. 확인 메시지는 다시 보내지 않고 1단계로 넘어간다.
 
 1. Explore the repo to understand the current state of the codebase, if you haven't already. Use the project's domain glossary vocabulary throughout the spec, and respect any ADRs in the area you're touching.
 
@@ -127,4 +151,4 @@ A list of testing decisions that were made. Include:
 - 같은 폴더의 `DESIGN.md` CSS를 그대로 넣고 클래스만 붙인다.
 - 보여주기: 이미 돌고 있는 개발 서버가 있으면 그 서버로, 없으면 `python3 -m http.server <포트> --bind 0.0.0.0 --directory docs`(python이 없으면 `npx http-server docs -a 0.0.0.0 -p <포트>`)로 띄우고 포트와 경로(`/mockup.html`)를 알려준다.
 
-끝나면 답변에는 사용자 확인이 필요한 것만 적는다: 목업 포트·경로, 스택·폴더 추천안, 가정으로 채운 규칙, 적용할지 고를 Suggestions. 구현은 시작하지 않는다.
+끝나면 답변에는 사용자 확인이 필요한 것만 적는다: 목업 포트·경로, 스택·폴더 추천안(사용자가 고르기 전에는 DECISIONS.md에 적지 않는다), 적용할지 고를 Suggestions. 구현은 시작하지 않는다.

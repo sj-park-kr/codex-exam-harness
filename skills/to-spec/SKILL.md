@@ -4,7 +4,7 @@ description: "Turn the current conversation into a PRD and an architecture doc a
 disable-model-invocation: true
 ---
 
-This skill takes the current conversation context and codebase understanding and produces a spec. Synthesize what you already know. 대화·문서에 답이 없는 판단(규칙 빈칸, README 입출력 형식과의 충돌, 스택·구조 선택)은 직접 정하지 말고 추천안을 붙여 모아서 사용자에게 묻고, 답을 받은 뒤 문서를 쓴다(AGENTS.md "기록" 절).
+This skill takes the current conversation context and codebase understanding and produces a spec. Synthesize what you already know. 대화·문서에 답이 없는 판단(규칙 빈칸, README 입출력 형식과의 충돌, 스택·구조 선택, 핵심 알고리즘)은 직접 정하지 말고 추천안을 붙여 모아서 사용자에게 묻고, 답을 받은 뒤 문서를 쓴다(AGENTS.md "기록" 절).
 
 Write the spec as two human-readable documents: `docs/PRD.md` (what and why) and `docs/ARCHITECTURE.md` (how). Do not publish them to an issue tracker. If the assignment already provides a PRD or ARCHITECTURE document, fill that one instead of creating a new file.
 
@@ -110,6 +110,15 @@ ASCII 그림 (예: 입력 데이터 → 적재 → DB → 계산 → 결과 → 
 ## 저장·재실행
 재시작 후 보존, 실패 시 기존 결과 유지 방식 (README가 요구할 때)
 
+## 핵심 로직
+배정·선정·최적화·판정처럼 결과를 정하는 계산마다 적는다. 이름만 쓰지 말고 처음 보는 사람이 손으로 따라 할 수 있게 쓴다.
+- 입력 → 출력
+- 절차: 번호 붙인 단계. PRD Business Rules가 어느 단계에서 어떻게 적용되는지(제약으로 거르는지, 점수로 반영하는지)
+- 고른 방식 / 버린 대안 / 고른 이유 (정확도·속도·설명 가능성 중 무엇을 택했는지)
+- 동점·처리 못 한 대상·입력이 비었을 때의 처리
+- 데이터 크기 기준 실행 시간과 한계(최적해가 아니면 어디서 손해 보는지)
+- 작은 예시 하나: 입력 몇 줄 → 단계별 결과 → 최종 출력
+
 ## Implementation Decisions
 
 A list of implementation decisions that were made, beyond what the sections above already show. This can include:
@@ -151,5 +160,7 @@ A list of testing decisions that were made. Include:
 - 데이터는 제공 데이터의 실제 컬럼명·값 형식을 본뜬 가짜 값 몇 줄. 개인정보·비밀값은 넣지 않는다.
 - 같은 폴더의 `DESIGN.md` CSS를 그대로 넣고 클래스만 붙인다.
 - 보여주기: 이미 돌고 있는 개발 서버가 있으면 그 서버로, 없으면 `python3 -m http.server <포트> --bind 0.0.0.0 --directory docs`(python이 없으면 `npx http-server docs -a 0.0.0.0 -p <포트>`)로 띄우고 포트와 경로(`/mockup.html`)를 알려준다.
+
+핵심 알고리즘은 문서를 쓰기 전에 후보 2~3개를 한 줄씩(방식 / 장점 / 단점 / 이 데이터에서의 결과 차이) 보여주고 추천안을 붙여 사용자에게 묻는다. 사용자가 고른 방식만 "핵심 로직" 절과 DECISIONS.md에 적는다.
 
 끝나면 답변에는 사용자 확인이 필요한 것만 적는다: 목업 포트·경로, 스택·폴더 추천안(사용자가 고르기 전에는 DECISIONS.md에 적지 않는다), 적용할지 고를 Suggestions. 구현은 시작하지 않는다.
